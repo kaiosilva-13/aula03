@@ -24,6 +24,24 @@ export class SolicitacoesService {
     return solicitacao;
   }
 
+  gerarRelatorio() {
+    const numSolicitacoes = this.solicitacoes.length;
+    const numPendentes = this.solicitacoes.filter(
+      (item) => item.status === 'pendente',
+    ).length;
+    const numAprovadas = this.solicitacoes.filter(
+      (item) => item.status === 'aprovada',
+    ).length;
+
+    return {
+      total: numSolicitacoes,
+      porStatus: {
+        aprovadas: numAprovadas,
+        pendentes: numPendentes,
+      },
+    };
+  }
+
   aprovar(id: number) {
     const solicitacao = this.buscarPorId(id);
     solicitacao.status = 'aprovada';
